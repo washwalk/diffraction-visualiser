@@ -10,9 +10,12 @@ export default function Home() {
     const [slitWidth, setSlitWidth] = useState(10);
     const [slitSeparation, setSlitSeparation] = useState(25);
 
+    const [aperture, setAperture] = useState<number[][] | null>(null);
+
     useEffect(() => {
-        const aperture = doubleSlit(64, slitWidth, slitSeparation);
-        const result = diffractionPattern(aperture);
+        const ap = doubleSlit(64, slitWidth, slitSeparation);
+        setAperture(ap);
+        const result = diffractionPattern(ap);
         setPattern(result);
     }, [slitWidth, slitSeparation]);
 
@@ -29,7 +32,8 @@ export default function Home() {
             <label>Slit Separation: {slitSeparation}</label>
             <input type="range" min="10" max="40" value={slitSeparation} onChange={e => setSlitSeparation(Number(e.target.value))} />
         </div>
-        {pattern && <DiffractionCanvas data={pattern} />}
+        {aperture && <div><h2>Aperture</h2><DiffractionCanvas data={aperture} isAperture={true} /></div>}
+        {pattern && <div><h2>Diffraction Pattern</h2><DiffractionCanvas data={pattern} isAperture={false} /></div>}
         </main>
     );
 }
