@@ -28,9 +28,7 @@ export default function Home() {
 
     return (
         <main style={{ padding: 24 }}>
-        <h1>Diffraction Visualiser</h1>
-        <p>Light propagation through apertures</p>
-        <p>Watch how light fills the space after passing through different shapes.</p>
+        <h1 style={{ fontSize: '1.5em', marginBottom: '10px' }}>Light propagation through apertures: Watch how light fills the space after passing through different shapes.</h1>
         <div>
             <label>Aperture Shape: </label>
             <select value={shape} onChange={e => setShape(e.target.value)}>
