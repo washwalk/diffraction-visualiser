@@ -38,30 +38,34 @@ function Wavefront({ position, scale }: { position: number; scale: number }) {
 }
 
 function DiffractionScene({ playing, speed }: { playing: boolean; speed: number }) {
-  const wavefrontsRef = useRef<THREE.Group>(null)
-  const [wavefronts, setWavefronts] = useState<number[]>([])
+  const groupRef = useRef<THREE.Group>(null!)
 
   useFrame((state, delta) => {
-    if (!playing) return
+    if (!groupRef.current || !playing) return
 
-    // Update existing wavefronts: move and scale, limit to 10
-    setWavefronts(prev =>
-      prev.map(w => ({ z: w.z + speed * delta * 5, scale: w.scale + speed * delta * 4 }))
-        .filter(w => w.z < 15 && w.scale < 5)
-        .slice(-10) // Keep max 10
-    )
+    const time = state.clock.elapsedTime * speed
+    const numWavefronts = 5
+    for (let i = 0; i < numWavefronts; i++) {
+      const phase = (time + i * 2) % 10 // Staggered phases
+      const z = 1 + phase * 2
+      const scale = 0.5 + phase * 0.5
 
-    // Add new wavefronts at aperture more frequently
-    if (Math.random() < 0.5) {
-      setWavefronts(prev => [...prev, { z: 1, scale: 1 }])
+      const mesh = groupRef.current.children[i] as THREE.Mesh
+      if (mesh) {
+        mesh.position.z = z
+        mesh.scale.set(scale, scale, scale)
+      }
     }
   })
 
   /* @ts-ignore */
   return (
-    <group ref={wavefrontsRef}>
-      {wavefronts.map((z, index) => (
-        <Wavefront key={index} position={z} opacity={0.5} />
+    <group ref={groupRef}>
+      {Array.from({ length: 5 }, (_, i) => (
+        <mesh key={i} position={[0, 0, 1]}>
+          <sphereGeometry args={[0.5, 16, 16]} />
+          <meshBasicMaterial color="white" />
+        </mesh>
       ))}
     </group>
   )
