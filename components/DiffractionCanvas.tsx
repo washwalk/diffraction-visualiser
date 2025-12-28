@@ -51,17 +51,7 @@ export function DiffractionCanvas({ data, isAperture, animate }: { data: number[
 
             ctx.putImageData(img, 0, 0);
 
-            // Draw wavefronts if animating
-            if (animate) {
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
-                ctx.lineWidth = 1;
-                for (let r = 0; r < N / 2; r += 5) {
-                    const waveProgress = (progress * N / 2 + r) % (N / 2);
-                    ctx.beginPath();
-                    ctx.arc(centerX, centerY, waveProgress, 0, 2 * Math.PI);
-                    ctx.stroke();
-                }
-            }
+
         };
 
         if (animate) {
@@ -69,7 +59,7 @@ export function DiffractionCanvas({ data, isAperture, animate }: { data: number[
             const animateFrame = (timestamp: number) => {
                 if (!startTime) startTime = timestamp;
                 const elapsed = timestamp - startTime;
-                const progress = (elapsed / 3000) % 1; // 3 second loop
+                const progress = (elapsed / 8000) % 1; // 8 second loop
                 draw(progress);
                 setAnimationFrame(requestAnimationFrame(animateFrame));
             };
