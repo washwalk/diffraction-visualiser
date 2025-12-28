@@ -164,3 +164,23 @@ export function grating(size: number, slitWidth = 4, slitSpacing = 10, numSlits 
 
     return A;
 }
+
+export function annulus(size: number, innerRadius = size / 4, outerRadius = size / 3): number[][] {
+    const A = Array.from({ length: size }, () =>
+        new Array(size).fill(0)
+    );
+
+    const cx = size / 2;
+    const cy = size / 2;
+
+    for (let y = 0; y < size; y++) {
+        for (let x = 0; x < size; x++) {
+            const dx = x - cx;
+            const dy = y - cy;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist >= innerRadius && dist <= outerRadius) A[y][x] = 1;
+        }
+    }
+
+    return A;
+}

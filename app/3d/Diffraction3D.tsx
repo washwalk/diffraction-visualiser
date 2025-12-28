@@ -19,6 +19,8 @@ function Aperture({ shape }: { shape: string }) {
         <planeGeometry args={[0.5, 0.5]} />
       ) : shape === 'triangle' ? (
         <coneGeometry args={[0.4, 0.8, 3]} />
+      ) : shape === 'annulus' ? (
+        <ringGeometry args={[size / 4, size / 3, 32]} />
       ) : (
         <boxGeometry args={[1, 0.5, 0.1]} /> // grating approximation
       )}
@@ -70,7 +72,7 @@ function DiffractionScene({ playing, speed, shape }: { playing: boolean; speed: 
 
     // Transmitted wavefronts (diffracted on right)
     if (transmittedGroupRef.current && lightsRef.current) {
-      const numTransmitted = shape === 'circle' ? 5 : shape === 'slit' ? 2 : 3 // Shape affects diffraction complexity
+      const numTransmitted = shape === 'circle' ? 5 : shape === 'slit' ? 2 : shape === 'annulus' ? 4 : 3 // Shape affects diffraction complexity
       for (let i = 0; i < Math.min(numTransmitted, 3); i++) { // Limit to 3 meshes
         const phase = (time + i * 3) % 15
         const z = 0.5 + phase * 1.5
@@ -138,6 +140,7 @@ export default function Diffraction3D() {
           <option value="square">Square</option>
           <option value="triangle">Triangle</option>
           <option value="grating">Grating</option>
+          <option value="annulus">Annulus</option>
         </select>
       </div>
       /* @ts-ignore */
