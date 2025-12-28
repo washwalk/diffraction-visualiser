@@ -41,5 +41,6 @@ export function DiffractionCanvas({ data, isAperture }: { data: number[][]; isAp
         ctx.putImageData(img, 0, 0);
     }, [data, isAperture]);
 
-    return <canvas ref={ref} width={64} height={64} style={{ width: '512px', height: '512px', border: '1px solid black' }} />;
+    const displaySize = isAperture ? '200px' : '512px';
+    return <canvas ref={ref} width={64} height={64} style={{ width: displaySize, height: displaySize, border: '1px solid black' }} />;
 }

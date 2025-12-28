@@ -50,8 +50,10 @@ export default function Home() {
                 </div>
             </>
         )}
-        {aperture && <div><h2>Aperture</h2><DiffractionCanvas data={aperture} isAperture={true} /></div>}
-        {pattern && <div><h2>Diffraction Pattern</h2><DiffractionCanvas data={pattern} isAperture={false} /></div>}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+            {aperture && <div><h3>Aperture</h3><DiffractionCanvas data={aperture} isAperture={true} /></div>}
+            {pattern && <div><h2>Diffraction Pattern</h2><DiffractionCanvas data={pattern} isAperture={false} /></div>}
+        </div>
         </main>
     );
 }
