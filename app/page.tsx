@@ -11,65 +11,75 @@ export default function Home() {
     const [shape, setShape] = useState('smiley');
     const [slitWidth, setSlitWidth] = useState(10);
     const [slitSeparation, setSlitSeparation] = useState(25);
+    const [loading, setLoading] = useState(false);
     const [compareMode, setCompareMode] = useState(false);
     const [pattern2, setPattern2] = useState<number[][] | null>(null);
     const [aperture2, setAperture2] = useState<number[][] | null>(null);
     const [shape2, setShape2] = useState('doubleSlit');
     const [slitWidth2, setSlitWidth2] = useState(10);
     const [slitSeparation2, setSlitSeparation2] = useState(25);
+    const [loading2, setLoading2] = useState(false);
     const [animate, setAnimate] = useState(false);
 
     useEffect(() => {
-        let ap: number[][];
-        if (shape === 'doubleSlit') {
-            ap = doubleSlit(64, slitWidth, slitSeparation);
-        } else if (shape === 'smiley') {
-            ap = smileyFace(64);
-        } else if (shape === 'singleSlit') {
-            ap = singleSlit(64, slitWidth);
-        } else if (shape === 'circle') {
-            ap = circle(64);
-        } else if (shape === 'square') {
-            ap = square(64);
-        } else if (shape === 'triangle') {
-            ap = triangle(64);
-        } else if (shape === 'grating') {
-            ap = grating(64);
-        } else if (shape === 'annulus') {
-            ap = annulus(64);
-        } else {
-            ap = doubleSlit(64, slitWidth, slitSeparation); // default
-        }
-        setAperture(ap);
-        const result = diffractionPattern(ap);
-        setPattern(result);
+        setLoading(true);
+        setTimeout(() => { // Simulate async for UI feedback
+            let ap: number[][];
+            if (shape === 'doubleSlit') {
+                ap = doubleSlit(64, slitWidth, slitSeparation);
+            } else if (shape === 'smiley') {
+                ap = smileyFace(64);
+            } else if (shape === 'singleSlit') {
+                ap = singleSlit(64, slitWidth);
+            } else if (shape === 'circle') {
+                ap = circle(64);
+            } else if (shape === 'square') {
+                ap = square(64);
+            } else if (shape === 'triangle') {
+                ap = triangle(64);
+            } else if (shape === 'grating') {
+                ap = grating(64);
+            } else if (shape === 'annulus') {
+                ap = annulus(64);
+            } else {
+                ap = doubleSlit(64, slitWidth, slitSeparation); // default
+            }
+            setAperture(ap);
+            const result = diffractionPattern(ap);
+            setPattern(result);
+            setLoading(false);
+        }, 100);
     }, [shape, slitWidth, slitSeparation]);
 
     useEffect(() => {
         if (!compareMode) return;
-        let ap: number[][];
-        if (shape2 === 'doubleSlit') {
-            ap = doubleSlit(64, slitWidth2, slitSeparation2);
-        } else if (shape2 === 'smiley') {
-            ap = smileyFace(64);
-        } else if (shape2 === 'singleSlit') {
-            ap = singleSlit(64, slitWidth2);
-        } else if (shape2 === 'circle') {
-            ap = circle(64);
-        } else if (shape2 === 'square') {
-            ap = square(64);
-        } else if (shape2 === 'triangle') {
-            ap = triangle(64);
-        } else if (shape2 === 'grating') {
-            ap = grating(64);
-        } else if (shape2 === 'annulus') {
-            ap = annulus(64);
-        } else {
-            ap = doubleSlit(64, slitWidth2, slitSeparation2); // default
-        }
-        setAperture2(ap);
-        const result = diffractionPattern(ap);
-        setPattern2(result);
+        setLoading2(true);
+        setTimeout(() => {
+            let ap: number[][];
+            if (shape2 === 'doubleSlit') {
+                ap = doubleSlit(64, slitWidth2, slitSeparation2);
+            } else if (shape2 === 'smiley') {
+                ap = smileyFace(64);
+            } else if (shape2 === 'singleSlit') {
+                ap = singleSlit(64, slitWidth2);
+            } else if (shape2 === 'circle') {
+                ap = circle(64);
+            } else if (shape2 === 'square') {
+                ap = square(64);
+            } else if (shape2 === 'triangle') {
+                ap = triangle(64);
+            } else if (shape2 === 'grating') {
+                ap = grating(64);
+            } else if (shape2 === 'annulus') {
+                ap = annulus(64);
+            } else {
+                ap = doubleSlit(64, slitWidth2, slitSeparation2); // default
+            }
+            setAperture2(ap);
+            const result = diffractionPattern(ap);
+            setPattern2(result);
+            setLoading2(false);
+        }, 100);
     }, [compareMode, shape2, slitWidth2, slitSeparation2]);
 
     return (
