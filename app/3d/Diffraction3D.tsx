@@ -32,7 +32,7 @@ function Wavefront({ position, scale }: { position: number; scale: number }) {
   return (
     <mesh position={[0, 0, position]} scale={[scale, scale, 1]}>
       <circleGeometry args={[5, 32]} />
-      <meshBasicMaterial color="cyan" transparent opacity={0.5} />
+      <meshBasicMaterial color="cyan" transparent opacity={0.8} />
     </mesh>
   )
 }
