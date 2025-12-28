@@ -32,7 +32,7 @@ function Wavefront({ position, scale }: { position: number; scale: number }) {
   return (
     <mesh position={[0, 0, position]} scale={[scale * 2, scale * 2, scale]}>
       <boxGeometry args={[1, 1, 0.5]} />
-      <meshBasicMaterial color="yellow" />
+      <meshBasicMaterial color="yellow" wireframe />
     </mesh>
   )
 }
@@ -44,8 +44,6 @@ function DiffractionScene({ playing, speed }: { playing: boolean; speed: number 
   useFrame((state, delta) => {
     if (!playing) return
 
-    console.log('playing, delta:', delta, 'wavefronts before:', wavefronts.length)
-
     // Update existing wavefronts: move and scale, limit to 10
     setWavefronts(prev =>
       prev.map(w => ({ z: w.z + speed * delta * 5, scale: w.scale + speed * delta * 4 }))
@@ -55,8 +53,7 @@ function DiffractionScene({ playing, speed }: { playing: boolean; speed: number 
 
     // Add new wavefronts at aperture more frequently
     if (Math.random() < 0.5) {
-      console.log('adding wavefront')
-      setWavefronts(prev => [...prev, { z: 0, scale: 0.5 }])
+      setWavefronts(prev => [...prev, { z: 1, scale: 0.5 }])
     }
   })
 
