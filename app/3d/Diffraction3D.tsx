@@ -62,9 +62,7 @@ function DiffractionScene({ playing, speed }: { playing: boolean; speed: number 
     }
 
     // Add new wavefronts at aperture
-    if (Math.random() < 0.1) { // Occasional new wavefront
-      setWavefronts(prev => [...prev, 0])
-    }
+
   })
 
   /* @ts-ignore */
