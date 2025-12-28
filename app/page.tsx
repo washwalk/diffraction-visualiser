@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { doubleSlit, smileyFace } from '../lib/apertures';
+import { doubleSlit, smileyFace, singleSlit, circle, square } from '../lib/apertures';
 import { diffractionPattern } from '../lib/fft';
 import { DiffractionCanvas } from '../components/DiffractionCanvas';
 
@@ -18,6 +18,12 @@ export default function Home() {
             ap = doubleSlit(64, slitWidth, slitSeparation);
         } else if (shape === 'smiley') {
             ap = smileyFace(64);
+        } else if (shape === 'singleSlit') {
+            ap = singleSlit(64, slitWidth);
+        } else if (shape === 'circle') {
+            ap = circle(64);
+        } else if (shape === 'square') {
+            ap = square(64);
         } else {
             ap = doubleSlit(64, slitWidth, slitSeparation); // default
         }
@@ -32,8 +38,11 @@ export default function Home() {
         <div>
             <label>Aperture Shape: </label>
             <select value={shape} onChange={e => setShape(e.target.value)}>
-                <option value="doubleSlit">Double Slit</option>
                 <option value="smiley">Smiley Face</option>
+                <option value="doubleSlit">Double Slit</option>
+                <option value="singleSlit">Single Slit</option>
+                <option value="circle">Circle</option>
+                <option value="square">Square</option>
             </select>
         </div>
         {shape === 'doubleSlit' && (

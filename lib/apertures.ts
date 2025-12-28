@@ -70,3 +70,56 @@ export function smileyFace(size: number): number[][] {
 
     return A;
 }
+
+export function singleSlit(size: number, slitWidth = 10): number[][] {
+    const A = Array.from({ length: size }, () =>
+        new Array(size).fill(0)
+    );
+
+    const cx = size / 2;
+
+    for (let y = 0; y < size; y++) {
+        for (let x = 0; x < size; x++) {
+            if (Math.abs(x - cx) < slitWidth / 2) A[y][x] = 1;
+        }
+    }
+
+    return A;
+}
+
+export function circle(size: number, radius = size / 4): number[][] {
+    const A = Array.from({ length: size }, () =>
+        new Array(size).fill(0)
+    );
+
+    const cx = size / 2;
+    const cy = size / 2;
+
+    for (let y = 0; y < size; y++) {
+        for (let x = 0; x < size; x++) {
+            const dx = x - cx;
+            const dy = y - cy;
+            if (dx * dx + dy * dy <= radius * radius) A[y][x] = 1;
+        }
+    }
+
+    return A;
+}
+
+export function square(size: number, side = size / 2): number[][] {
+    const A = Array.from({ length: size }, () =>
+        new Array(size).fill(0)
+    );
+
+    const cx = size / 2;
+    const cy = size / 2;
+    const halfSide = side / 2;
+
+    for (let y = 0; y < size; y++) {
+        for (let x = 0; x < size; x++) {
+            if (Math.abs(x - cx) < halfSide && Math.abs(y - cy) < halfSide) A[y][x] = 1;
+        }
+    }
+
+    return A;
+}
