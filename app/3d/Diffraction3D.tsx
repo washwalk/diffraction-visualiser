@@ -24,9 +24,9 @@ function Aperture({ shape }: { shape: string }) {
 function Wavefront({ position, scale }: { position: number; scale: number }) {
   /* @ts-ignore */
   return (
-    <mesh position={[0, 0, position]}>
-      <ringGeometry args={[0, 5 * scale, 32]} />
-      <meshBasicMaterial color="cyan" transparent opacity={0.5} side={THREE.DoubleSide} />
+    <mesh position={[0, 0, position]} scale={[scale, scale, 1]}>
+      <circleGeometry args={[5, 32]} />
+      <meshBasicMaterial color="cyan" transparent opacity={0.5} />
     </mesh>
   )
 }
