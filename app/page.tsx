@@ -36,6 +36,7 @@ export default function Home() {
     return (
         <main style={{ padding: 24 }}>
         <h1 style={{ fontSize: '1.5em', marginBottom: '10px' }}>Light propagation through apertures: Watch how light fills the space after passing through different shapes.</h1>
+        <p><a href="/3d" style={{ color: 'blue' }}>View 3D Animation</a></p>
         <div>
             <label>Aperture Shape: </label>
             <select value={shape} onChange={e => setShape(e.target.value)}>
