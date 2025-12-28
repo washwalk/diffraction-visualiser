@@ -8,8 +8,8 @@ import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
 function Aperture({ shape }: { shape: string }) {
-  // @ts-ignore
   return (
+    {/* @ts-ignore */}
     <mesh position={[0, 0, 0]}>
       {shape === 'circle' ? (
         <ringGeometry args={[0, 0.5, 32]} />
@@ -22,8 +22,8 @@ function Aperture({ shape }: { shape: string }) {
 }
 
 function Wavefront({ position, opacity }: { position: number; opacity: number }) {
-  // @ts-ignore
   return (
+    {/* @ts-ignore */}
     <mesh position={[0, 0, position]}>
       <planeGeometry args={[10, 10]} />
       <meshBasicMaterial color="blue" transparent opacity={opacity} />
@@ -31,7 +31,6 @@ function Wavefront({ position, opacity }: { position: number; opacity: number })
   )
 }
 
-// @ts-ignore
 function DiffractionScene({ playing, speed }: { playing: boolean; speed: number }) {
   const wavefrontsRef = useRef<THREE.Group>(null)
   const [wavefronts, setWavefronts] = useState<number[]>([])
@@ -56,6 +55,7 @@ function DiffractionScene({ playing, speed }: { playing: boolean; speed: number 
   })
 
   return (
+    {/* @ts-ignore */}
     <group ref={wavefrontsRef}>
       {wavefronts.map((z, index) => (
         <Wavefront key={index} position={z} opacity={0.5} />
@@ -80,12 +80,12 @@ export default function Diffraction3D() {
           <option value="slit">Slit</option>
         </select>
       </div>
-      // @ts-ignore
+      {/* @ts-ignore */}
       <Canvas camera={{ position: [5, 5, 5], fov: 50 }}>
         <ambientLight />
         <Aperture shape={shape} />
         <DiffractionScene playing={playing} speed={speed} />
-        // @ts-ignore
+        {/* @ts-ignore */}
         <OrbitControls />
       </Canvas>
     </>
