@@ -59,11 +59,6 @@ function DiffractionScene({ playing, speed }: { playing: boolean; speed: number 
       setWavefronts(prev => [...prev, { z: 0, scale: 1 }])
     }
   })
-    }
-
-    // Add new wavefronts at aperture
-
-  })
 
   /* @ts-ignore */
   return (
