@@ -70,7 +70,3 @@ export function smileyFace(size: number): number[][] {
 
     return A;
 }
-    }
-
-    return A;
-}
