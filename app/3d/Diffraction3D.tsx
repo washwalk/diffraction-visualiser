@@ -141,7 +141,7 @@ export default function Diffraction3D() {
         </select>
       </div>
       /* @ts-ignore */
-      <Canvas camera={{ position: [0, 5, 5], fov: 50 }}>
+      <Canvas camera={{ position: [0, 0, 15], fov: 50 }}>
         <color attach="background" args={['#000']} />
         <ambientLight intensity={0.1} />
         {/* Cube room */}
