@@ -38,39 +38,75 @@ function Wavefront({ position, scale }: { position: number; scale: number }) {
 }
 
 function DiffractionScene({ playing, speed }: { playing: boolean; speed: number }) {
-  const groupRef = useRef<THREE.Group>(null!)
+  const transmittedGroupRef = useRef<THREE.Group>(null!)
+  const incomingGroupRef = useRef<THREE.Group>(null!)
 
   useFrame((state, delta) => {
-    if (!groupRef.current || !playing) return
+    if (!playing) return
 
     const time = state.clock.elapsedTime * speed
-    const numWavefronts = 5
-    for (let i = 0; i < numWavefronts; i++) {
-      const phase = (time + i * 2) % 10 // Staggered phases
-      const z = 1 + phase * 2
-      const scale = 0.5 + phase * 0.5
 
-      const mesh = groupRef.current.children[i] as THREE.Mesh
-      if (mesh) {
-        mesh.position.z = z
-        mesh.scale.set(scale, scale, scale)
-        // Change color based on scale
-        const material = mesh.material as THREE.MeshBasicMaterial
-        material.color.setHSL(scale / 5, 1, 0.5)
+    // Incoming wavefronts (approaching from left)
+    if (incomingGroupRef.current) {
+      const numIncoming = 8
+      for (let i = 0; i < numIncoming; i++) {
+        const phase = (time + i * 1.5) % 12
+        const z = -5 + phase * 1 // Move from -5 to 7, but stop at 0
+        const scale = 0.5 + (phase / 12) * 2
+
+        const mesh = incomingGroupRef.current.children[i] as THREE.Mesh
+        if (mesh && z < 0) { // Only show before aperture
+          mesh.position.z = z
+          mesh.scale.set(scale, scale, scale)
+          const material = mesh.material as THREE.MeshBasicMaterial
+          material.color.setHSL(0.6, 1, 0.5) // Blue for incoming
+          mesh.visible = true
+        } else if (mesh) {
+          mesh.visible = false
+        }
+      }
+    }
+
+    // Transmitted wavefronts (diffracted on right)
+    if (transmittedGroupRef.current) {
+      const numTransmitted = 3 // Fewer than incoming to show absorption
+      for (let i = 0; i < numTransmitted; i++) {
+        const phase = (time + i * 3) % 15
+        const z = 0.5 + phase * 1.5
+        const scale = 0.3 + (phase / 15) * 3
+
+        const mesh = transmittedGroupRef.current.children[i] as THREE.Mesh
+        if (mesh) {
+          mesh.position.z = z
+          mesh.scale.set(scale, scale, scale)
+          // Change color based on scale
+          const material = mesh.material as THREE.MeshBasicMaterial
+          material.color.setHSL(scale / 5, 1, 0.5)
+        }
       }
     }
   })
 
   /* @ts-ignore */
   return (
-    <group ref={groupRef}>
-      {Array.from({ length: 5 }, (_, i) => (
-        <mesh key={i} position={[0, 0, 1]}>
-          <sphereGeometry args={[0.5, 16, 16]} />
-          <meshBasicMaterial />
-        </mesh>
-      ))}
-    </group>
+    <>
+      <group ref={incomingGroupRef}>
+        {Array.from({ length: 8 }, (_, i) => (
+          <mesh key={`incoming-${i}`} position={[0, 0, -5]}>
+            <sphereGeometry args={[0.5, 16, 16]} />
+            <meshBasicMaterial />
+          </mesh>
+        ))}
+      </group>
+      <group ref={transmittedGroupRef}>
+        {Array.from({ length: 3 }, (_, i) => (
+          <mesh key={`transmitted-${i}`} position={[0, 0, 0.5]}>
+            <sphereGeometry args={[0.5, 16, 16]} />
+            <meshBasicMaterial />
+          </mesh>
+        ))}
+      </group>
+    </>
   )
 }
 
