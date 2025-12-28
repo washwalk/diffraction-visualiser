@@ -30,9 +30,9 @@ function Aperture({ shape }: { shape: string }) {
 function Wavefront({ position, scale }: { position: number; scale: number }) {
   /* @ts-ignore */
   return (
-    <mesh position={[0, 0, position]} scale={[scale, scale, 1]}>
-      <circleGeometry args={[5, 32]} />
-      <meshBasicMaterial color="cyan" transparent opacity={0.8} />
+    <mesh position={[0, 0, position]} scale={[scale, scale, scale]}>
+      <boxGeometry args={[1, 1, 0.1]} />
+      <meshBasicMaterial color="red" />
     </mesh>
   )
 }
@@ -91,6 +91,7 @@ export default function Diffraction3D() {
       </div>
       /* @ts-ignore */
       <Canvas camera={{ position: [5, 5, 5], fov: 50 }}>
+        <color attach="background" args={['#111']} />
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 5]} intensity={1} />
         <Aperture shape={shape} />
