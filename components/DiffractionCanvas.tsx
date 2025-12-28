@@ -30,5 +30,5 @@ export function DiffractionCanvas({ data }: { data: number[][] }) {
         ctx.putImageData(img, 0, 0);
     }, [data]);
 
-    return <canvas ref={ref} width={128} height={128} style={{ width: '512px', height: '512px', border: '1px solid black' }} />;
+    return <canvas ref={ref} width={64} height={64} style={{ width: '512px', height: '512px', border: '1px solid black' }} />;
 }
