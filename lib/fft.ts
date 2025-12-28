@@ -9,7 +9,7 @@ export function diffractionPattern(aperture: number[][]) {
 
             for (let y = 0; y < N; y++) {
                 for (let x = 0; x < N; x++) {
-                    const phase = -2.0 * Math.PI * ((kx * x + ky * y) / N);
+                    const phase = -2.0 * Math.PI * (((kx - N / 2) * x + (ky - N / 2) * y) / N);
                     const a = aperture[y][x];
                     real += a * Math.cos(phase);
                     imag += a * Math.sin(phase);
