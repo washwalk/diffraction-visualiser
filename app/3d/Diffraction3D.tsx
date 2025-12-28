@@ -93,7 +93,7 @@ export default function Diffraction3D() {
         <directionalLight position={[10, 10, 5]} intensity={1} />
         <Aperture shape={shape} />
         <DiffractionScene playing={playing} speed={speed} />
-        <OrbitControls enablePan={false} enableZoom={true} />
+        {/* <OrbitControls enablePan={false} enableZoom={true} /> */}
       </Canvas>
     </>
   )
