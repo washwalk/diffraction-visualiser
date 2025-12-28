@@ -1,5 +1,6 @@
 'use client';
 
+// Test comment for auto-deploy
 import { useEffect, useState } from 'react';
 import { doubleSlit, smileyFace, singleSlit, circle, square, triangle, grating, annulus } from '../lib/apertures';
 import { diffractionPattern } from '../lib/fft';
