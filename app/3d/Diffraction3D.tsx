@@ -1,19 +1,19 @@
 'use client'
 
 import { Canvas } from '@react-three/fiber'
-import { OrbitControls, Text } from '@react-three/drei'
+import { OrbitControls } from '@react-three/drei'
 import { useRef, useState } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
 function Aperture({ shape }: { shape: string }) {
-  const meshRef = useRef<THREE.Mesh>(null)
-
-  const geometry = shape === 'circle' ? new THREE.RingGeometry(0, 0.5, 32) : new THREE.PlaneGeometry(1, 0.1)
-
   return (
-    <mesh ref={meshRef} position={[0, 0, 0]}>
-      <primitive object={geometry} />
+    <mesh position={[0, 0, 0]}>
+      {shape === 'circle' ? (
+        <ringGeometry args={[0, 0.5, 32]} />
+      ) : (
+        <planeGeometry args={[1, 0.1]} />
+      )}
       <meshBasicMaterial color="black" />
     </mesh>
   )
