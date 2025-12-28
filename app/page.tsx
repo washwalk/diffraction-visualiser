@@ -11,6 +11,7 @@ export default function Home() {
     const [shape, setShape] = useState('smiley');
     const [slitWidth, setSlitWidth] = useState(10);
     const [slitSeparation, setSlitSeparation] = useState(25);
+    const [animate, setAnimate] = useState(false);
 
     useEffect(() => {
         let ap: number[][];
@@ -44,6 +45,10 @@ export default function Home() {
                 <option value="circle">Circle</option>
                 <option value="square">Square</option>
             </select>
+            <label style={{ marginLeft: '20px' }}>
+                <input type="checkbox" checked={animate} onChange={e => setAnimate(e.target.checked)} />
+                Animate Propagation
+            </label>
         </div>
         {shape === 'doubleSlit' && (
             <>
@@ -58,8 +63,8 @@ export default function Home() {
             </>
         )}
         <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-            {aperture && <div><h3>Aperture</h3><DiffractionCanvas data={aperture} isAperture={true} /></div>}
-            {pattern && <div><h2>Diffraction Pattern</h2><DiffractionCanvas data={pattern} isAperture={false} /></div>}
+        {aperture && <div><h3>Aperture</h3><DiffractionCanvas data={aperture} isAperture={true} animate={false} /></div>}
+        {pattern && <div><h2>Diffraction Pattern</h2><DiffractionCanvas data={pattern} isAperture={false} animate={animate} /></div>}
         </div>
         </main>
     );
