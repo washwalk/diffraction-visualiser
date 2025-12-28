@@ -16,17 +16,17 @@ function Aperture({ shape }: { shape: string }) {
       ) : (
         <planeGeometry args={[1, 0.1]} />
       )}
-      <meshBasicMaterial color="black" />
+      <meshBasicMaterial color="gray" />
     </mesh>
   )
 }
 
-function Wavefront({ position, opacity }: { position: number; opacity: number }) {
+function Wavefront({ position, scale }: { position: number; scale: number }) {
   /* @ts-ignore */
   return (
     <mesh position={[0, 0, position]}>
-      <planeGeometry args={[10, 10]} />
-      <meshBasicMaterial color="blue" transparent opacity={opacity} />
+      <ringGeometry args={[0, 5 * scale, 32]} />
+      <meshBasicMaterial color="cyan" transparent opacity={0.3} side={THREE.DoubleSide} />
     </mesh>
   )
 }
@@ -82,10 +82,11 @@ export default function Diffraction3D() {
       </div>
       /* @ts-ignore */
       <Canvas camera={{ position: [5, 5, 5], fov: 50 }}>
-        <ambientLight />
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[10, 10, 5]} intensity={1} />
         <Aperture shape={shape} />
         <DiffractionScene playing={playing} speed={speed} />
-        <OrbitControls />
+        <OrbitControls enablePan={false} enableZoom={true} />
       </Canvas>
     </>
   )
