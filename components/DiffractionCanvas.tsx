@@ -12,6 +12,7 @@ export function DiffractionCanvas({ data }: { data: number[][] }) {
         const img = ctx.createImageData(N, N);
 
         const max = Math.max(...data.flat());
+        console.log('max intensity:', max);
 
         for (let y = 0; y < N; y++) {
             for (let x = 0; x < N; x++) {

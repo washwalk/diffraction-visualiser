@@ -9,7 +9,7 @@ export default function Home() {
     const [pattern, setPattern] = useState<number[][] | null>(null);
 
     useEffect(() => {
-        const aperture = doubleSlit(128);
+        const aperture = doubleSlit(128, 20, 50);
         const result = diffractionPattern(aperture);
         setPattern(result);
     }, []);
