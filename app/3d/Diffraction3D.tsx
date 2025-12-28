@@ -40,6 +40,7 @@ function Wavefront({ position, scale }: { position: number; scale: number }) {
 function DiffractionScene({ playing, speed }: { playing: boolean; speed: number }) {
   const transmittedGroupRef = useRef<THREE.Group>(null!)
   const incomingGroupRef = useRef<THREE.Group>(null!)
+  const lightsRef = useRef<THREE.Group>(null!)
 
   useFrame((state, delta) => {
     if (!playing) return
@@ -68,7 +69,7 @@ function DiffractionScene({ playing, speed }: { playing: boolean; speed: number 
     }
 
     // Transmitted wavefronts (diffracted on right)
-    if (transmittedGroupRef.current) {
+    if (transmittedGroupRef.current && lightsRef.current) {
       const numTransmitted = 3 // Fewer than incoming to show absorption
       for (let i = 0; i < numTransmitted; i++) {
         const phase = (time + i * 3) % 15
@@ -76,12 +77,17 @@ function DiffractionScene({ playing, speed }: { playing: boolean; speed: number 
         const scale = 0.3 + (phase / 15) * 3
 
         const mesh = transmittedGroupRef.current.children[i] as THREE.Mesh
-        if (mesh) {
+        const light = lightsRef.current.children[i] as THREE.PointLight
+        if (mesh && light) {
           mesh.position.z = z
           mesh.scale.set(scale, scale, scale)
           // Change color based on scale
-          const material = mesh.material as THREE.MeshBasicMaterial
-          material.color.setHSL(scale / 5, 1, 0.5)
+          const hue = scale / 5
+          const material = mesh.material as THREE.MeshLambertMaterial
+          material.color.setHSL(hue, 1, 0.5)
+          light.color.setHSL(hue, 1, 0.5)
+          light.position.z = z
+          light.intensity = scale
         }
       }
     }
@@ -102,8 +108,13 @@ function DiffractionScene({ playing, speed }: { playing: boolean; speed: number 
         {Array.from({ length: 3 }, (_, i) => (
           <mesh key={`transmitted-${i}`} position={[0, 0, 0.5]}>
             <sphereGeometry args={[0.5, 16, 16]} />
-            <meshBasicMaterial />
+            <meshLambertMaterial />
           </mesh>
+        ))}
+      </group>
+      <group ref={lightsRef}>
+        {Array.from({ length: 3 }, (_, i) => (
+          <pointLight key={`light-${i}`} position={[0, 0, 0.5]} intensity={1} />
         ))}
       </group>
     </>
@@ -132,8 +143,12 @@ export default function Diffraction3D() {
       /* @ts-ignore */
       <Canvas camera={{ position: [0, 5, 5], fov: 50 }}>
         <color attach="background" args={['#000']} />
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[10, 10, 5]} intensity={1} />
+        <ambientLight intensity={0.1} />
+        {/* Cube room */}
+        <mesh>
+          <boxGeometry args={[20, 20, 20]} />
+          <meshLambertMaterial color="#111" transparent opacity={0.1} side={THREE.BackSide} />
+        </mesh>
         <Aperture shape={shape} />
         <DiffractionScene playing={playing} speed={speed} />
         {/* <OrbitControls enablePan={false} enableZoom={true} /> */}
