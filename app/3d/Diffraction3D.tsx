@@ -54,6 +54,9 @@ function DiffractionScene({ playing, speed }: { playing: boolean; speed: number 
       if (mesh) {
         mesh.position.z = z
         mesh.scale.set(scale, scale, scale)
+        // Change color based on scale
+        const material = mesh.material as THREE.MeshBasicMaterial
+        material.color.setHSL(scale / 5, 1, 0.5)
       }
     }
   })
@@ -64,7 +67,7 @@ function DiffractionScene({ playing, speed }: { playing: boolean; speed: number 
       {Array.from({ length: 5 }, (_, i) => (
         <mesh key={i} position={[0, 0, 1]}>
           <sphereGeometry args={[0.5, 16, 16]} />
-          <meshBasicMaterial color="white" />
+          <meshBasicMaterial />
         </mesh>
       ))}
     </group>
