@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { doubleSlit, smileyFace, singleSlit, circle, square } from '../lib/apertures';
+import { doubleSlit, smileyFace, singleSlit, circle, square, triangle, grating } from '../lib/apertures';
 import { diffractionPattern } from '../lib/fft';
 import { DiffractionCanvas } from '../components/DiffractionCanvas';
 
@@ -25,6 +25,10 @@ export default function Home() {
             ap = circle(64);
         } else if (shape === 'square') {
             ap = square(64);
+        } else if (shape === 'triangle') {
+            ap = triangle(64);
+        } else if (shape === 'grating') {
+            ap = grating(64);
         } else {
             ap = doubleSlit(64, slitWidth, slitSeparation); // default
         }
@@ -45,6 +49,8 @@ export default function Home() {
                 <option value="singleSlit">Single Slit</option>
                 <option value="circle">Circle</option>
                 <option value="square">Square</option>
+                <option value="triangle">Triangle</option>
+                <option value="grating">Grating</option>
             </select>
             <label style={{ marginLeft: '20px' }}>
                 <input type="checkbox" checked={animate} onChange={e => setAnimate(e.target.checked)} />

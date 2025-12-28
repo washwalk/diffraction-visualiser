@@ -123,3 +123,44 @@ export function square(size: number, side = size / 2): number[][] {
 
     return A;
 }
+
+export function triangle(size: number, height = size / 2): number[][] {
+    const A = Array.from({ length: size }, () =>
+        new Array(size).fill(0)
+    );
+
+    const cx = size / 2;
+    const cy = size / 2;
+
+    for (let y = 0; y < size; y++) {
+        for (let x = 0; x < size; x++) {
+            const dx = Math.abs(x - cx);
+            const dy = y - (cy - height / 2);
+            if (dy >= 0 && dy <= height && dx <= (height - dy) * 0.5) A[y][x] = 1;
+        }
+    }
+
+    return A;
+}
+
+export function grating(size: number, slitWidth = 4, slitSpacing = 10, numSlits = 3): number[][] {
+    const A = Array.from({ length: size }, () =>
+        new Array(size).fill(0)
+    );
+
+    const cx = size / 2;
+    const startY = size / 2 - (numSlits - 1) * slitSpacing / 2;
+
+    for (let i = 0; i < numSlits; i++) {
+        const slitY = startY + i * slitSpacing;
+        for (let y = Math.floor(slitY - slitWidth / 2); y <= Math.floor(slitY + slitWidth / 2); y++) {
+            if (y >= 0 && y < size) {
+                for (let x = 0; x < size; x++) {
+                    A[y][x] = 1;
+                }
+            }
+        }
+    }
+
+    return A;
+}

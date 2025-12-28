@@ -13,8 +13,14 @@ function Aperture({ shape }: { shape: string }) {
     <mesh position={[0, 0, 0]}>
       {shape === 'circle' ? (
         <ringGeometry args={[0, 0.5, 32]} />
-      ) : (
+      ) : shape === 'slit' ? (
         <planeGeometry args={[1, 0.1]} />
+      ) : shape === 'square' ? (
+        <planeGeometry args={[0.5, 0.5]} />
+      ) : shape === 'triangle' ? (
+        <coneGeometry args={[0.4, 0.8, 3]} />
+      ) : (
+        <boxGeometry args={[1, 0.5, 0.1]} /> // grating approximation
       )}
       <meshBasicMaterial color="gray" />
     </mesh>
@@ -75,9 +81,12 @@ export default function Diffraction3D() {
         <h1>3D Diffraction Animation</h1>
         <button onClick={() => setPlaying(!playing)}>{playing ? 'Pause' : 'Play'}</button>
         <label>Speed: <input type="range" min="0.1" max="3" step="0.1" value={speed} onChange={e => setSpeed(Number(e.target.value))} /></label>
-        <select value={shape} onChange={e => setShape(e.target.value)}>
+            <select value={shape} onChange={e => setShape(e.target.value)}>
           <option value="circle">Circle</option>
           <option value="slit">Slit</option>
+          <option value="square">Square</option>
+          <option value="triangle">Triangle</option>
+          <option value="grating">Grating</option>
         </select>
       </div>
       /* @ts-ignore */
