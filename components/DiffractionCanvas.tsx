@@ -59,9 +59,14 @@ export function DiffractionCanvas({ data, isAperture, animate }: { data: number[
             const animateFrame = (timestamp: number) => {
                 if (!startTime) startTime = timestamp;
                 const elapsed = timestamp - startTime;
-                const progress = (elapsed / 8000) % 1; // 8 second loop
-                draw(progress);
-                setAnimationFrame(requestAnimationFrame(animateFrame));
+                const progress = elapsed / 8000; // 8 seconds to full reveal
+                if (progress < 1) {
+                    draw(progress);
+                    setAnimationFrame(requestAnimationFrame(animateFrame));
+                } else {
+                    draw(1); // Full reveal
+                    setAnimationFrame(0); // Stop animation
+                }
             };
             setAnimationFrame(requestAnimationFrame(animateFrame));
         } else {
