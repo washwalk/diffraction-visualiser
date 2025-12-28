@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { doubleSlit } from '@/lib/apertures';
-import { diffractionPattern } from '@/lib/fft';
-import { DiffractionCanvas } from '@/components/DiffractionCanvas';
+import { doubleSlit } from '../lib/apertures';
+import { diffractionPattern } from '../lib/fft';
+import { DiffractionCanvas } from '../components/DiffractionCanvas';
 
 export default function Home() {
     const [pattern, setPattern] = useState<number[][] | null>(null);
