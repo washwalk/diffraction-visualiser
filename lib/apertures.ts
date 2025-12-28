@@ -4,7 +4,7 @@ export function doubleSlit(
     slitSeparation = 30
 ) {
     const A = Array.from({ length: size }, () =>
-    new Float32Array(size)
+        new Array(size).fill(0)
     );
 
     const cx = size / 2;
