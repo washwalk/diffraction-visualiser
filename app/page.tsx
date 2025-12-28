@@ -18,6 +18,7 @@ export default function Home() {
         <main style={{ padding: 24 }}>
         <h1>Diffraction Visualiser</h1>
         <p>Fraunhofer diffraction of a double slit</p>
+        <p>The red areas show high intensity diffraction patterns.</p>
         {pattern && <DiffractionCanvas data={pattern} />}
         </main>
     );

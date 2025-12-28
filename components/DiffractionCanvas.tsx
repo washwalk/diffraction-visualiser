@@ -20,9 +20,9 @@ export function DiffractionCanvas({ data }: { data: number[][] }) {
                 const v = Math.log(1 + data[y][x]) / Math.log(1 + max);
                 const c = Math.floor(255 * v);
 
-                img.data[i] = c;
-                img.data[i + 1] = c;
-                img.data[i + 2] = c;
+                img.data[i] = c;     // red
+                img.data[i + 1] = 0; // green
+                img.data[i + 2] = 0; // blue
                 img.data[i + 3] = 255;
             }
         }
