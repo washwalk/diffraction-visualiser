@@ -19,6 +19,23 @@ export function doubleSlit(
 
     return A;
 }
+
+export function smileyFace(size: number): number[][] {
+    const A = Array.from({ length: size }, () =>
+        new Array(size).fill(0)
+    );
+
+    const cx = size / 2;
+    const cy = size / 2;
+    const radius = size / 3;
+
+    // Face circle
+    for (let y = 0; y < size; y++) {
+        for (let x = 0; x < size; x++) {
+            const dx = x - cx;
+            const dy = y - cy;
+            if (dx * dx + dy * dy <= radius * radius) A[y][x] = 1;
+        }
     }
 
     // Eyes
