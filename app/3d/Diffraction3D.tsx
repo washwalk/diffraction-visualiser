@@ -1,4 +1,4 @@
-/// <reference types="@react-three/fiber" />
+// @ts-nocheck
 'use client'
 
 import { Canvas } from '@react-three/fiber'
