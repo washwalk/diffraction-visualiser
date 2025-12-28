@@ -8,7 +8,7 @@ import { DiffractionCanvas } from '../components/DiffractionCanvas';
 export default function Home() {
     const [pattern, setPattern] = useState<number[][] | null>(null);
     const [aperture, setAperture] = useState<number[][] | null>(null);
-    const [shape, setShape] = useState('doubleSlit');
+    const [shape, setShape] = useState('smiley');
     const [slitWidth, setSlitWidth] = useState(10);
     const [slitSeparation, setSlitSeparation] = useState(25);
 
