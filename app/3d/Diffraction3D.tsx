@@ -26,7 +26,7 @@ function Wavefront({ position, scale }: { position: number; scale: number }) {
   return (
     <mesh position={[0, 0, position]}>
       <ringGeometry args={[0, 5 * scale, 32]} />
-      <meshBasicMaterial color="cyan" transparent opacity={0.3} side={THREE.DoubleSide} />
+      <meshBasicMaterial color="cyan" transparent opacity={0.5} side={THREE.DoubleSide} />
     </mesh>
   )
 }
