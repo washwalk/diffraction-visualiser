@@ -44,14 +44,21 @@ function DiffractionScene({ playing, speed }: { playing: boolean; speed: number 
   useFrame((state, delta) => {
     if (!playing) return
 
-    // Move existing wavefronts
-    if (wavefrontsRef.current) {
-      wavefrontsRef.current.children.forEach((child, index) => {
-        child.position.z += speed * delta * 2
-        if (child.position.z > 10) {
-          wavefrontsRef.current!.remove(child)
-        }
-      })
+    console.log('playing, delta:', delta, 'wavefronts before:', wavefronts.length)
+
+    // Update existing wavefronts: move and scale, limit to 10
+    setWavefronts(prev =>
+      prev.map(w => ({ z: w.z + speed * delta * 5, scale: w.scale + speed * delta * 4 }))
+        .filter(w => w.z < 15 && w.scale < 5)
+        .slice(-10) // Keep max 10
+    )
+
+    // Add new wavefronts at aperture more frequently
+    if (Math.random() < 0.5) {
+      console.log('adding wavefront')
+      setWavefronts(prev => [...prev, { z: 0, scale: 1 }])
+    }
+  })
     }
 
     // Add new wavefronts at aperture
