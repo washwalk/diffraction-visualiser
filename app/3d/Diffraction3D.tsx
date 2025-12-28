@@ -95,6 +95,11 @@ export default function Diffraction3D() {
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 5]} intensity={1} />
         <Aperture shape={shape} />
+        {/* Test mesh */}
+        <mesh position={[0, 0, 2]}>
+          <sphereGeometry args={[0.5, 16, 16]} />
+          <meshBasicMaterial color="green" />
+        </mesh>
         <DiffractionScene playing={playing} speed={speed} />
         <OrbitControls enablePan={false} enableZoom={true} />
       </Canvas>
