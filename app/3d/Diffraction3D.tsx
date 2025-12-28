@@ -30,9 +30,9 @@ function Aperture({ shape }: { shape: string }) {
 function Wavefront({ position, scale }: { position: number; scale: number }) {
   /* @ts-ignore */
   return (
-    <mesh position={[0, 0, position]} scale={[scale, scale, scale]}>
-      <boxGeometry args={[1, 1, 0.1]} />
-      <meshBasicMaterial color="red" />
+    <mesh position={[0, 0, position]} scale={[scale * 2, scale * 2, scale]}>
+      <boxGeometry args={[1, 1, 0.5]} />
+      <meshBasicMaterial color="yellow" />
     </mesh>
   )
 }
@@ -56,7 +56,7 @@ function DiffractionScene({ playing, speed }: { playing: boolean; speed: number 
     // Add new wavefronts at aperture more frequently
     if (Math.random() < 0.5) {
       console.log('adding wavefront')
-      setWavefronts(prev => [...prev, { z: 0, scale: 1 }])
+      setWavefronts(prev => [...prev, { z: 0, scale: 0.5 }])
     }
   })
 
