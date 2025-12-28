@@ -16,6 +16,7 @@ export function DiffractionCanvas({ data, isAperture, animate }: { data: number[
         const max = Math.max(...data.flat());
         console.log(isAperture ? 'aperture max:' : 'pattern max:', max);
 
+        const maxDist = Math.sqrt(2) * (N / 2); // Distance to corners
         const draw = (progress: number) => {
             ctx.clearRect(0, 0, N, N);
             const img = ctx.createImageData(N, N);
@@ -23,7 +24,7 @@ export function DiffractionCanvas({ data, isAperture, animate }: { data: number[
             for (let y = 0; y < N; y++) {
                 for (let x = 0; x < N; x++) {
                     const dist = Math.sqrt((x - centerX) ** 2 + (y - centerY) ** 2);
-                    const revealProgress = dist / (N / 2); // 0 to 1
+                    const revealProgress = dist / maxDist; // 0 to 1, corners at 1
 
                     if (!animate || revealProgress <= progress) {
                         const i = (y * N + x) * 4;
@@ -59,14 +60,9 @@ export function DiffractionCanvas({ data, isAperture, animate }: { data: number[
             const animateFrame = (timestamp: number) => {
                 if (!startTime) startTime = timestamp;
                 const elapsed = timestamp - startTime;
-                const progress = elapsed / 8000; // 8 seconds to full reveal
-                if (progress < 1) {
-                    draw(progress);
-                    setAnimationFrame(requestAnimationFrame(animateFrame));
-                } else {
-                    draw(1); // Full reveal
-                    setAnimationFrame(0); // Stop animation
-                }
+                const progress = (elapsed / 8000) % 1; // 8 second loop
+                draw(progress);
+                setAnimationFrame(requestAnimationFrame(animateFrame));
             };
             setAnimationFrame(requestAnimationFrame(animateFrame));
         } else {
