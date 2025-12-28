@@ -19,6 +19,10 @@ export function DiffractionCanvas({ data, isAperture, animate }: { data: number[
         const maxDist = Math.sqrt(2) * (N / 2); // Distance to corners
         const draw = (progress: number) => {
             ctx.clearRect(0, 0, N, N);
+            if (isAperture) {
+                ctx.fillStyle = 'black';
+                ctx.fillRect(0, 0, N, N);
+            }
             const img = ctx.createImageData(N, N);
 
             for (let y = 0; y < N; y++) {
