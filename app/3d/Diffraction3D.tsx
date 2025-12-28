@@ -37,7 +37,7 @@ function Wavefront({ position, scale }: { position: number; scale: number }) {
   )
 }
 
-function DiffractionScene({ playing, speed }: { playing: boolean; speed: number }) {
+function DiffractionScene({ playing, speed, shape }: { playing: boolean; speed: number; shape: string }) {
   const transmittedGroupRef = useRef<THREE.Group>(null!)
   const incomingGroupRef = useRef<THREE.Group>(null!)
   const lightsRef = useRef<THREE.Group>(null!)
@@ -70,8 +70,8 @@ function DiffractionScene({ playing, speed }: { playing: boolean; speed: number 
 
     // Transmitted wavefronts (diffracted on right)
     if (transmittedGroupRef.current && lightsRef.current) {
-      const numTransmitted = 3 // Fewer than incoming to show absorption
-      for (let i = 0; i < numTransmitted; i++) {
+      const numTransmitted = shape === 'circle' ? 5 : shape === 'slit' ? 2 : 3 // Shape affects diffraction complexity
+      for (let i = 0; i < Math.min(numTransmitted, 3); i++) { // Limit to 3 meshes
         const phase = (time + i * 3) % 15
         const z = 0.5 + phase * 1.5
         const scale = 0.3 + (phase / 15) * 3
@@ -150,7 +150,7 @@ export default function Diffraction3D() {
           <meshLambertMaterial color="#111" transparent opacity={0.1} side={THREE.BackSide} />
         </mesh>
         <Aperture shape={shape} />
-        <DiffractionScene playing={playing} speed={speed} />
+        <DiffractionScene playing={playing} speed={speed} shape={shape} />
         {/* <OrbitControls enablePan={false} enableZoom={true} /> */}
       </Canvas>
     </>
