@@ -11,6 +11,12 @@ export default function Home() {
     const [shape, setShape] = useState('smiley');
     const [slitWidth, setSlitWidth] = useState(10);
     const [slitSeparation, setSlitSeparation] = useState(25);
+    const [compareMode, setCompareMode] = useState(false);
+    const [pattern2, setPattern2] = useState<number[][] | null>(null);
+    const [aperture2, setAperture2] = useState<number[][] | null>(null);
+    const [shape2, setShape2] = useState('doubleSlit');
+    const [slitWidth2, setSlitWidth2] = useState(10);
+    const [slitSeparation2, setSlitSeparation2] = useState(25);
     const [animate, setAnimate] = useState(false);
 
     useEffect(() => {
@@ -39,10 +45,41 @@ export default function Home() {
         setPattern(result);
     }, [shape, slitWidth, slitSeparation]);
 
+    useEffect(() => {
+        if (!compareMode) return;
+        let ap: number[][];
+        if (shape2 === 'doubleSlit') {
+            ap = doubleSlit(64, slitWidth2, slitSeparation2);
+        } else if (shape2 === 'smiley') {
+            ap = smileyFace(64);
+        } else if (shape2 === 'singleSlit') {
+            ap = singleSlit(64, slitWidth2);
+        } else if (shape2 === 'circle') {
+            ap = circle(64);
+        } else if (shape2 === 'square') {
+            ap = square(64);
+        } else if (shape2 === 'triangle') {
+            ap = triangle(64);
+        } else if (shape2 === 'grating') {
+            ap = grating(64);
+        } else if (shape2 === 'annulus') {
+            ap = annulus(64);
+        } else {
+            ap = doubleSlit(64, slitWidth2, slitSeparation2); // default
+        }
+        setAperture2(ap);
+        const result = diffractionPattern(ap);
+        setPattern2(result);
+    }, [compareMode, shape2, slitWidth2, slitSeparation2]);
+
     return (
         <main style={{ padding: 24 }}>
         <h1 style={{ fontSize: '1.5em', marginBottom: '10px' }}>Light propagation through apertures: Watch how light fills the space after passing through different shapes.</h1>
         <p><a href="/3d" style={{ color: 'blue' }}>View 3D Animation</a></p>
+        <label>
+            <input type="checkbox" checked={compareMode} onChange={e => setCompareMode(e.target.checked)} />
+            Compare Mode
+        </label>
         <div>
             <label>Aperture Shape: </label>
             <select value={shape} onChange={e => setShape(e.target.value)}>
